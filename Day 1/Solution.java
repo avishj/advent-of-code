@@ -27,7 +27,7 @@ public class Solution {
         }
     }
 
-    private static int getNumIfCharIsNum(String line, char pos) {
+    private static int getNumIfCharIsNum(String line, int pos) {
         int value = (line.charAt(pos)) - 0x30;
         if (value >= 0 && value <= 9) {
             return value;
@@ -38,24 +38,18 @@ public class Solution {
     private static int scanForNumber(String line, Direction direction) {
         if (line.length() <= 0)
             return -1;
-        int start = -1;
-        int end = -1;
-        int delta;
         if (direction == Direction.LEFT) {
-            for (int i = 0; i < line.length(); i++)
-        } else if (direction == Direction.RIGHT) {
-            start = line.length() - 1;
-            end = 0;
-            delta = -1;
-        } else {
-            return -1;
-        }
-        while (start != end) {
-            int value = (line.charAt(start)) - 0x30;
-            if (value >= 0 && value <= 9) {
-                return value;
+            for (int i = 0; i < line.length(); ++i) {
+                int value = getNumIfCharIsNum(line, i);
+                if (value != -1)
+                    return value;
             }
-            start += delta;
+        } else if (direction == Direction.RIGHT) {
+            for (int i = line.length() - 1; i >= 0; --i) {
+                int value = getNumIfCharIsNum(line, i);
+                if (value != -1)
+                    return value;
+            }
         }
         return -1;
     }
