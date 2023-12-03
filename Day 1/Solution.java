@@ -16,7 +16,6 @@ public class Solution {
                 String line = input.nextLine();
                 int leftDigit = scanForNumber(line, Direction.LEFT);
                 int rightDigit = scanForNumber(line, Direction.RIGHT);
-                System.out.println(leftDigit + "" + rightDigit);
                 if (leftDigit != -1 && rightDigit != -1) {
                     sum += (leftDigit * 10) + rightDigit;
                 }
