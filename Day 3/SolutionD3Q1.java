@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class SolutionD3Q1 {
 
-    private static Pattern NUMBER_PATTERN = Pattern.compile("-?\\b\\d+\\b");
+    private static Pattern NUMBER_PATTERN = Pattern.compile("\\b\\d+\\b");
     private static Pattern SYMBOL_PATTERN = Pattern.compile("[^0-9.]");
 
     private static class Number {
@@ -49,7 +49,7 @@ public class SolutionD3Q1 {
     }
 
     public static void main(String[] args) {
-        try (Scanner input = new Scanner(new File("/Users/aj/Desktop/Projects/advent-of-code-2023/Day 3/t.txt"))) {
+        try (Scanner input = new Scanner(new File("/Users/aj/Desktop/Projects/advent-of-code-2023/Day 3/Input.txt"))) {
             long sum = 0;
             int lineCount = 0;
             List<Number> numbers = new ArrayList<>();
@@ -82,7 +82,6 @@ public class SolutionD3Q1 {
                                 || number.xEnd == symbol.x || number.xStart == symbol.x - 1 || number.xStart == symbol.x
                                 || number.xStart == symbol.x + 1))
                         .map(number -> number.value).collect(Collectors.summingInt(Integer::intValue));
-                System.out.println(symbol + " " + top + " " + left + " " + right + " " + bottom);
                 sum += top + left + right + bottom;
             }
             System.out.println("Total Part Number Sum: " + sum);
