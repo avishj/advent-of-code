@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class SolutionQ1 {
+public class SolutionD1Q1 {
 
     private enum Direction {
         LEFT,

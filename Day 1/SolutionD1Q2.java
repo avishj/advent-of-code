@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class SolutionQ2 {
+public class SolutionD1Q2 {
 
     private static List<String> texts = Arrays.asList(TextDigit.values()).stream().map(TextDigit::getTextFromTextDigit)
             .toList();
