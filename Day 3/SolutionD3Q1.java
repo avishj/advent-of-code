@@ -17,14 +17,12 @@ public class SolutionD3Q1 {
         int xEnd;
         int y;
         int value;
-        boolean used;
 
         public Number(int xStart, int xEnd, int y, int value) {
             this.xStart = xStart;
             this.xEnd = xEnd;
             this.y = y;
             this.value = value;
-            this.used = false;
         }
 
         @Override
@@ -70,36 +68,20 @@ public class SolutionD3Q1 {
                 ++lineCount;
             }
             for (Symbol symbol : symbols) {
-                List<Number> topNumbers = numbers.stream()
-                        .filter(number -> (!number.used) && (number.y == symbol.y - 1)
-                                && (number.xEnd == symbol.x - 1 || number.xEnd == symbol.x
-                                        || number.xStart == symbol.x - 1 || number.xStart == symbol.x
-                                        || number.xStart == symbol.x + 1))
-                        .toList();
-                List<Number> leftNumber = numbers.stream()
-                        .filter(number -> (!number.used) && (number.y == symbol.y) && (number.xEnd == symbol.x - 1))
-                        .toList();
-                List<Number> rightNumber = numbers.stream()
-                        .filter(number -> (!number.used) && (number.y == symbol.y) && (number.xStart == symbol.x + 1))
-                        .toList();
-                List<Number> bottomNumbers = numbers.stream()
-                        .filter(number -> (!number.used) && (number.y == symbol.y + 1)
-                                && (number.xEnd == symbol.x - 1 || number.xEnd == symbol.x
-                                        || number.xStart == symbol.x - 1 || number.xStart == symbol.x
-                                        || number.xStart == symbol.x + 1))
-                        .toList();
-                topNumbers.stream().forEach(number -> number.used = true);
-                leftNumber.stream().forEach(number -> number.used = true);
-                rightNumber.stream().forEach(number -> number.used = true);
-                bottomNumbers.stream().forEach(number -> number.used = true);
-                int top = topNumbers.stream().map(number -> number.value)
-                        .collect(Collectors.summingInt(Integer::intValue));
-                int left = leftNumber.stream().map(number -> number.value)
-                        .collect(Collectors.summingInt(Integer::intValue));
-                int right = rightNumber.stream().map(number -> number.value)
-                        .collect(Collectors.summingInt(Integer::intValue));
-                int bottom = bottomNumbers.stream().map(number -> number.value)
-                        .collect(Collectors.summingInt(Integer::intValue));
+                int top = numbers.stream()
+                        .filter(number -> (number.y == symbol.y - 1) && (number.xEnd == symbol.x - 1
+                                || number.xEnd == symbol.x || number.xStart == symbol.x - 1 || number.xStart == symbol.x
+                                || number.xStart == symbol.x + 1))
+                        .map(number -> number.value).collect(Collectors.summingInt(Integer::intValue));
+                int left = numbers.stream().filter(number -> (number.y == symbol.y) && (number.xEnd == symbol.x - 1))
+                        .map(number -> number.value).collect(Collectors.summingInt(Integer::intValue));
+                int right = numbers.stream().filter(number -> (number.y == symbol.y) && (number.xStart == symbol.x + 1))
+                        .map(number -> number.value).collect(Collectors.summingInt(Integer::intValue));
+                int bottom = numbers.stream()
+                        .filter(number -> (number.y == symbol.y + 1) && (number.xEnd == symbol.x - 1
+                                || number.xEnd == symbol.x || number.xStart == symbol.x - 1 || number.xStart == symbol.x
+                                || number.xStart == symbol.x + 1))
+                        .map(number -> number.value).collect(Collectors.summingInt(Integer::intValue));
                 System.out.println(symbol + " " + top + " " + left + " " + right + " " + bottom);
                 sum += top + left + right + bottom;
             }
