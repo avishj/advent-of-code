@@ -15,7 +15,6 @@ public class SolutionD6Q1 {
         try (Scanner input = new Scanner(new File("/Users/aj/Desktop/Projects/advent-of-code-2023/Day 6/Input.txt"))) {
             String timeLine = input.nextLine();
             String distanceLine = input.nextLine();
-            Arrays.stream(timeLine.split(":")[1].split("\\s+")).forEach(System.out::println);
             List<Integer> times = Arrays.stream(timeLine.split(":")[1].split("\\s+"))
                     .filter(s -> !s.isEmpty())
                     .map(Integer::parseInt).toList();
