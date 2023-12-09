@@ -1,0 +1,7 @@
+humidity to temperature map:
+0->69
+1...69->0...68
+
+location to humidity map:
+60...96->56...92
+56...59->93...96
