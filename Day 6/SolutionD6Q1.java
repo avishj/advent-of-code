@@ -3,7 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,27 +33,21 @@ public class SolutionD6Q1 {
 
     public static void main(String[] args) {
         Map<Integer, Integer> inputs = processInput();
-        long result = 1;
-        for (Map.Entry<Integer, Integer> input : inputs.entrySet()) {
-            int time = input.getKey();
-            int distanceToBeat = input.getValue();
-            int startWin = -1, endWin = -1;
-            for (int i = 0; i < time; ++i) {
-                if ((time - i) * i > distanceToBeat) {
-                    startWin = i;
-                    break;
-                }
+        AtomicLong result = new AtomicLong(1);
+        inputs.entrySet().forEach(entry -> {
+            Optional<Integer> startWin = IntStream.range(0, entry.getKey())
+                    .boxed()
+                    .filter(i -> entry.getValue() < i * (entry.getKey() - i))
+                    .findFirst();
+            Optional<Integer> endWin = IntStream.range(0, entry.getKey())
+                    .boxed()
+                    .map(i -> entry.getKey() - i + 0 - 1) // Reversing: http://stackoverflow.com/a/24011264/2711488
+                    .filter(i -> entry.getValue() < i * (entry.getKey() - i))
+                    .findFirst();
+            if (startWin.isPresent() && endWin.isPresent()) {
+                result.updateAndGet(operand -> operand * ((endWin.get() - startWin.get()) + 1));
             }
-            for (int i = time - 1; i >= 0; --i) {
-                if ((time - i) * i > distanceToBeat) {
-                    endWin = i;
-                    break;
-                }
-            }
-            if (startWin != -1 && endWin != -1) {
-                result *= (endWin - startWin) + 1;
-            }
-        }
-        System.out.println("The multiplied result is: " + result);
+        });
+        System.out.println("The multiplied result is: " + result.get());
     }
 }
