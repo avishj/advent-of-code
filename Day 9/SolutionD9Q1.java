@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class SolutionD9Q1 {
 
     private static List<Integer> solve(List<Integer> arr) {
-        if (arr.stream().reduce(0, Integer::sum) == 0) {
+        if (arr.stream().filter(v -> v != 0).count() == 0) {
             arr.add(0);
             return arr;
         }
@@ -23,7 +23,7 @@ public class SolutionD9Q1 {
     }
 
     public static void main(String[] args) {
-        try (Scanner input = new Scanner(new File("/Users/aj/Desktop/Projects/advent-of-code-2023/Day 9/t.txt"))) {
+        try (Scanner input = new Scanner(new File("/Users/aj/Desktop/Projects/advent-of-code-2023/Day 9/Input.txt"))) {
             int sum = 0;
             while (input.hasNextLine()) {
                 String line = input.nextLine();
